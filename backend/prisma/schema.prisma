@@ -1,0 +1,122 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"] 
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+// Catálogos
+model Rol {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @unique // Usuario, Gerente, Administrador, Auditor
+  usuarios Usuario[]
+}
+
+model Categoria {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique
+  activos Activo[]
+}
+
+model Ubicacion {
+  id               Int      @id @default(autoincrement())
+  area             String
+  subarea          String
+  ubicacion_fisica String
+  activos          Activo[]
+}
+
+model Marca {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique
+  activos Activo[]
+}
+
+model Proyecto {
+  id      Int      @id @default(autoincrement())
+  nombre  String   @unique
+  activos Activo[]
+}
+
+// Usuarios y SSO
+model Usuario {
+  id           String           @id @default(uuid())
+  azure_oid    String?          @unique
+  nombre       String
+  email        String           @unique
+  rol_id       Int
+  rol          Rol              @relation(fields: [rol_id], references: [id])
+  solicitudes  PrestamoSalida[] @relation("Requisitor")
+  aprobaciones PrestamoSalida[] @relation("Aprobador")
+}
+
+model InstitucionDestino {
+  id                 Int              @id @default(autoincrement())
+  nombre_institucion String
+  contacto_principal String?
+  contacto_adicional String?
+  prestamos          PrestamoSalida[]
+}
+
+// Activos (Inventario)
+model Activo {
+  identificador   String    @id
+  qr_code_hash    String    @unique
+  nombre_maquina  String?
+  tag             String?
+  numero_serie    String?
+  numero_parte    String?   // Obligatorio por rúbrica
+  modelo          String?   // Obligatorio por rúbrica
+  descripcion     String?
+  estado          String    @default("Disponible") // En el Excel viene como "impairment"
+  
+  categoria_id    Int
+  categoria       Categoria @relation(fields: [categoria_id], references: [id])
+  
+  ubicacion_id    Int
+  ubicacion       Ubicacion @relation(fields: [ubicacion_id], references: [id])
+
+  marca_id        Int?
+  marca           Marca?    @relation(fields: [marca_id], references: [id])
+
+  proyecto_id     Int?
+  proyecto        Proyecto? @relation(fields: [proyecto_id], references: [id])
+
+  anio            Int?
+  pedimento       String?
+  factura         String?
+  valor_comercial Float?
+  fecha_compra    DateTime?
+  comentarios     String?
+  tipo_compra     String?
+  tipo_nacional   String?   // En el Excel dice "Definitiva"
+  compra          String?   // En el Excel dice "SI"
+
+  prestamos       PrestamoSalida[]
+}
+
+// Flujo de Préstamo y Trazabilidad
+model PrestamoSalida {
+  id                 String    @id @default(uuid())
+  activo_id          String
+  activo             Activo    @relation(fields: [activo_id], references: [identificador])
+  
+  requisitor_id      String
+  requisitor         Usuario   @relation("Requisitor", fields: [requisitor_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  aprobador_id       String?
+  aprobador          Usuario?  @relation("Aprobador", fields: [aprobador_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  fecha_solicitud    DateTime  @default(now())
+  fecha_salida       DateTime?
+  fecha_devolucion_esperada DateTime?
+  fecha_devolucion_real DateTime?
+  institucion_destino_id Int?
+  institucion_destino    InstitucionDestino? @relation(fields: [institucion_destino_id], references: [id])
+  
+  estado_flujo       String    @default("Solicitado") // Solicitado, Aprobado, Entregado, Devuelto
+  hoja_salida_sp_url String?   // Enlace a SharePoint
+}
