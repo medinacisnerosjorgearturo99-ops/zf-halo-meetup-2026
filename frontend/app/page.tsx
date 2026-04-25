@@ -147,17 +147,17 @@ export default function LoginPage() {
             {currentT.demo}
           </p>
           <div className="flex flex-wrap justify-center gap-2">
-            <button onClick={() => autoFillDemo('jake@gmail.com', 'user')} className="...">Usuario</button>
+            <button onClick={() => autoFillDemo('usuario@zfhalo.com', 'user')} className="...">Usuario</button>
             
-            <button onClick={() => autoFillDemo('angel@gmail.com', 'gerente')} className="...">Gerente</button>
+            <button onClick={() => autoFillDemo('gerente@zfhalo.com', 'gerente')} className="...">Gerente</button>
             
             {/* Ejemplo si el admin tiene otra contraseña */}
-            <button onClick={() => autoFillDemo('jorge@gmail.com', 'admin')} className="...">Admin</button>
+            <button onClick={() => autoFillDemo('admin@zfhalo.com', 'admin')} className="...">Admin</button>
             
-            <button onClick={() => autoFillDemo('sebas@gmail.com', 'auditor')} className="...">Auditor</button>
+            <button onClick={() => autoFillDemo('auditor@zfhalo.com', 'auditor')} className="...">Auditor</button>
             
             {/* Ejemplo para el guardia con su correo real */}
-            <button onClick={() => autoFillDemo('jose@gmail.com', 'guardia')} className="...">guardia</button>
+            <button onClick={() => autoFillDemo('guardia@zfhalo.com', 'guardia')} className="...">guardia</button>
           </div>
         </div>
 
