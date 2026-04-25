@@ -16,11 +16,11 @@ async function main() {
 
   // Usuarios por rol
   const usuarios = [
-    { nombre: 'Jorge Arturo', email: 'admin@zfhalo.com', password: 'admin', rol: 'Administrador patrimonial' },
-    { nombre: 'Angel Emanuel',    email: 'gerente@zfhalo.com', password: 'gerente', rol: 'Gerente' },
-    { nombre: 'Sebastian Resendiz',    email: 'auditor@zfhalo.com', password: 'auditor', rol: 'Auditor' },
-    { nombre: 'Uriel Ramirez',    email: 'usuario@zfhalo.com', password: 'user', rol: 'Usuario' },
-    { nombre: 'Jose Hernandez',    email: 'guardia@zfhalo.com', password: 'guardia', rol: 'Guardia' },
+    { nombre: 'Jorge Arturo', email: 'admin@zfhalo.com', password: 'admin', rol: 'Administrador patrimonial', azure_oid: 'seed-admin-001' },
+    { nombre: 'Angel Emanuel',    email: 'gerente@zfhalo.com', password: 'gerente', rol: 'Gerente', azure_oid: 'seed-admin-002' },
+    { nombre: 'Sebastian Resendiz',    email: 'auditor@zfhalo.com', password: 'auditor', rol: 'Auditor', azure_oid: 'seed-admin-003' },
+    { nombre: 'Uriel Ramirez',    email: 'usuario@zfhalo.com', password: 'user', rol: 'Usuario', azure_oid: 'seed-admin-004' },
+    { nombre: 'Jose Hernandez',    email: 'guardia@zfhalo.com', password: 'guardia', rol: 'Guardia', azure_oid: 'seed-admin-005' },
   ];
 
   for (const u of usuarios) {
@@ -28,7 +28,7 @@ async function main() {
     if (!existe) {
       const rol = await prisma.rol.findUnique({ where: { nombre: u.rol } });
       await prisma.usuario.create({
-        data: { nombre: u.nombre, email: u.email, password: u.password, rol_id: rol!.id },
+        data: { nombre: u.nombre, email: u.email, password: u.password, azure_oid: u.azure_oid, rol_id: rol!.id },
       });
     }
   }
