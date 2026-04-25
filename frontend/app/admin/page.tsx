@@ -72,7 +72,7 @@ export default function AdminPage() {
   const fetchActivos = async () => {
     try {
       setCargando(true);
-      const res = await fetch('http://127.0.0.1:3001/activos');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/activos`);
       if (res.ok) {
         const data = await res.json();
         setActivosDB(data);

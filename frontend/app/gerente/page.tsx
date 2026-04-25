@@ -64,7 +64,7 @@ export default function GerentePage() {
   const fetchActivos = async () => {
     try {
       setCargando(true);
-      const res = await fetch('http://127.0.0.1:3001/activos');
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/activos`);
       if (res.ok) setActivosDB(await res.json());
     } catch (error) {
       console.error('Error:', error);

@@ -61,7 +61,7 @@ export default function KioscoPage() {
         const prefijo = partes[0]; 
         const identificador = partes[1] || textoEscaneado; 
 
-        const res = await fetch('http://127.0.0.1:3001/activos');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/activos`);
         const activos = await res.json();
         const encontrado = activos.find((a: any) => a.identificador === identificador);
 

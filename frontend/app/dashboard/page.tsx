@@ -3,7 +3,7 @@ import React from 'react';
 // Función para traer los datos de tu nuevo backend
 async function getKpis() {
   // Asegúrate de que el backend esté corriendo en el puerto 3001
-  const res = await fetch('http://localhost:3001/estadisticas/kpis', { 
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/estadisticas/kpis`, { 
     cache: 'no-store' // Para que siempre traiga datos frescos
   });
   
