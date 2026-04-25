@@ -24,17 +24,13 @@ async function main() {
   ];
 
   for (const u of usuarios) {
-    const rol = await prisma.rol.findUnique({ where: { nombre: u.rol } });
-    await prisma.usuario.upsert({
-      where: { email: u.email },
-      update: {},
-      create: {
-        nombre: u.nombre,
-        email: u.email,
-        password: u.password,
-        rol_id: rol!.id,
-      },
-    });
+    const existe = await prisma.usuario.findUnique({ where: { email: u.email } });
+    if (!existe) {
+      const rol = await prisma.rol.findUnique({ where: { nombre: u.rol } });
+      await prisma.usuario.create({
+        data: { nombre: u.nombre, email: u.email, password: u.password, rol_id: rol!.id },
+      });
+    }
   }
   console.log('✅ Usuarios creados');
 
