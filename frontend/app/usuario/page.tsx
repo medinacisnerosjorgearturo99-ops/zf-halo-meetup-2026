@@ -61,13 +61,14 @@ export default function UsuarioPage() {
 
   useEffect(() => { fetchActivos(); }, []);
 
-  const catalogo = activosDB.filter(a => a.estado === 'Disponible' || !a.estado);
-  const misPrestamos = activosDB.filter(a => a.estado === 'Solicitado' || a.estado === 'Aprobado' || a.estado === 'En Uso');
+  const estadosNoDisponibles = ['Solicitado', 'Aprobado', 'En Uso'];
+  const catalogo = activosDB.filter(a => !estadosNoDisponibles.includes(a.estado));
+  const misPrestamos = activosDB.filter(a => estadosNoDisponibles.includes(a.estado));
 
   const handleSolicitar = async (id: string) => {
     setProcesando(id);
     try {
-      await fetch(`http://127.0.0.1:3001/activos/${id}/estado`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/activos/${id}/estado`, {
         method: 'PATCH', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ estado: 'Solicitado' })
       });
