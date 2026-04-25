@@ -47,6 +47,7 @@ model Usuario {
   azure_oid    String?          @unique
   nombre       String
   email        String           @unique
+  password     String           @default("zf2026") // <-- El campo nuevo para la demo
   rol_id       Int
   rol          Rol              @relation(fields: [rol_id], references: [id])
   solicitudes  PrestamoSalida[] @relation("Requisitor")
