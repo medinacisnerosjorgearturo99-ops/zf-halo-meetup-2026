@@ -33,7 +33,7 @@ services:
     volumes:
       - ./frontend:/app
     ports:
-      - "4000:4000"
+      - "4000:3000"
     environment:
       - NEXT_PUBLIC_API_URL=http://108.175.13.227:3001
     command: sh -c "npm install && npm run build && npm run start"
