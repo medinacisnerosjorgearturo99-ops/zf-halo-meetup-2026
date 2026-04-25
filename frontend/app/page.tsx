@@ -55,7 +55,7 @@ export default function LoginPage() {
       else if (usuarioDB.rol_id === 2) router.push('/gerente');
       else if (usuarioDB.rol_id === 3) router.push('/admin');
       else if (usuarioDB.rol_id === 4) router.push('/auditor');
-      else if (usuarioDB.rol_id === 1002) router.push('/guardia'); 
+      else if (usuarioDB.rol_id === 5) router.push('/guardia'); 
       else setError('Tu rol no tiene una vista asignada.');
 
     } catch (err) {
