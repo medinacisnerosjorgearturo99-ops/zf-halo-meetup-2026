@@ -60,8 +60,8 @@ export default function CrearActivoModal({ onClose }: { onClose: () => void }) {
     const fetchSelects = async () => {
       try {
         const [resCat, resUbi] = await Promise.all([
-          fetch('http://127.0.0.1:3001/categorias'),
-          fetch('http://127.0.0.1:3001/ubicaciones')
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/categorias`),
+          fetch(`${process.env.NEXT_PUBLIC_API_URL}/ubicaciones`)
         ]);
         if (resCat.ok) setCategoriasDB(await resCat.json());
         if (resUbi.ok) setUbicacionesDB(await resUbi.json());
@@ -86,7 +86,7 @@ export default function CrearActivoModal({ onClose }: { onClose: () => void }) {
     };
 
     try {
-      const res = await fetch('http://127.0.0.1:3001/activos', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/activos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

@@ -74,14 +74,14 @@ export default function KioscoPage() {
           alert(`📄 FICHA TÉCNICA\n\nTag: ${encontrado.identificador}\nEquipo: ${encontrado.nombre_maquina}\nModelo: ${encontrado.modelo || 'N/A'}\nNo. Serie: ${encontrado.numero_serie || 'N/A'}\nEstado: ${encontrado.estado || 'Disponible'}`);
         } else if (modoEscaneo === 'checkout' && prefijo === 'TOKEN-OUT') {
           if (encontrado.estado === 'Aprobado') {
-            await fetch(`http://127.0.0.1:3001/activos/${identificador}/estado`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/activos/${identificador}/estado`, {
               method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ estado: 'En Uso' })
             });
             alert(currentT.alertOkOut);
           } else { alert(currentT.alertDeny); }
         } else if (modoEscaneo === 'checkin' && prefijo === 'TOKEN-IN') {
           if (encontrado.estado === 'En Uso') {
-            await fetch(`http://127.0.0.1:3001/activos/${identificador}/estado`, {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/activos/${identificador}/estado`, {
               method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ estado: 'Disponible' })
             });
             alert(currentT.alertOkIn);
