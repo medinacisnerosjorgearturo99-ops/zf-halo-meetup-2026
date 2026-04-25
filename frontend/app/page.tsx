@@ -65,9 +65,10 @@ export default function LoginPage() {
     }
   };
 
-  const autoFillDemo = (email: string) => {
+  // Antes recibía solo email, ahora recibe email y password
+  const autoFillDemo = (email: string, pass: string) => {
     setCredencial(email);
-    setPassword('zf2026');
+    setPassword(pass);
   };
 
   return (
@@ -146,11 +147,17 @@ export default function LoginPage() {
             {currentT.demo}
           </p>
           <div className="flex flex-wrap justify-center gap-2">
-            <button onClick={() => autoFillDemo('usuario@zf.com')} className="px-3 py-1 bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-50 rounded transition-colors">Usuario</button>
-            <button onClick={() => autoFillDemo('gerente@zf.com')} className="px-3 py-1 bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-50 rounded transition-colors">Gerente</button>
-            <button onClick={() => autoFillDemo('admin@zf.com')} className="px-3 py-1 bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-50 rounded transition-colors">Admin</button>
-            <button onClick={() => autoFillDemo('auditor@zf.com')} className="px-3 py-1 bg-white border border-slate-200 dark:bg-slate-800 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-50 rounded transition-colors">Auditor</button>
-            <button onClick={() => autoFillDemo('guardia@zf.com')} className="px-3 py-1 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-xs text-amber-700 dark:text-amber-500 font-bold hover:bg-amber-100 rounded transition-colors">Kiosco</button>
+            <button onClick={() => autoFillDemo('jake@gmail.com', 'user')} className="...">Usuario</button>
+            
+            <button onClick={() => autoFillDemo('angel@gmail.com', 'gerente')} className="...">Gerente</button>
+            
+            {/* Ejemplo si el admin tiene otra contraseña */}
+            <button onClick={() => autoFillDemo('jorge@gmail.com', 'admin')} className="...">Admin</button>
+            
+            <button onClick={() => autoFillDemo('sebas@gmail.com', 'auditor')} className="...">Auditor</button>
+            
+            {/* Ejemplo para el guardia con su correo real */}
+            <button onClick={() => autoFillDemo('jose@gmail.com', 'guardia')} className="...">guardia</button>
           </div>
         </div>
 
